@@ -89,7 +89,7 @@ Relative paths are relative to the file being checked."
                         (setenv "RAKU_EXCEPTIONS_HANDLER" "JSON"))))
   :pre-check (unless rakudo-exec
                (error "Cannot find rakudo executable"))
-  :write-type 'file
+  :write-type 'pipe
   :command `(,rakudo-exec
              "-c"
              ,@(let ((include-paths flymake-rakudo-include-path))
@@ -99,9 +99,7 @@ Relative paths are relative to the file being checked."
                        (push (expand-file-name (project-root current-project))
                              include-paths)))
                  (cl-loop for path in include-paths
-                          collect (concat "-I" path)))
-             ,(when-let (file-name (buffer-file-name flymake-collection-source))
-                file-name))
+                          collect (concat "-I" path))))
   :generator
   (let ((json-alist
          (flymake-collection-parse-json
