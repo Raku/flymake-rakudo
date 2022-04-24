@@ -108,7 +108,8 @@ Relative paths are relative to the file being checked."
            (point-min) (point-max)))))
     (let ((errors (flymake-rakudo--find-elements-with-line json-alist)))
       (let-alist (cdaar json-alist)
-          (setq errors (append errors (flymake-rakudo--parse-panic .panic))))
+        (when .panic
+          (setq errors (append errors (flymake-rakudo--parse-panic .panic)))))
       errors))
   :enumerate-parser
   (let-alist it
