@@ -91,6 +91,7 @@ Relative paths are relative to the file being checked."
                (error "Cannot find rakudo executable"))
   :write-type 'file
   :command `(,rakudo-exec
+             "-c"
              ,@(let ((include-paths flymake-rakudo-include-path))
                  ;; Add project root to path
                  (let ((current-project (project-current)))
